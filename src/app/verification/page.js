@@ -2,6 +2,7 @@
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 const VerificationPage = () => {
   const [loading, setLoading] = useState(false);
@@ -40,6 +41,10 @@ const VerificationPage = () => {
     }
   };
 
+
+const handleResend = async ()=>{
+  toast.error("Otp is limited")
+}
   return (
     <div className="signup-wrapper">
       <div className="signup-container">
@@ -61,7 +66,7 @@ const VerificationPage = () => {
                 required
                 onChange={(e) => setCode(e.target.value)}
               />
-              <button type="button" className="resend-btn">
+              <button type="button" onClick={handleResend} className="resend-btn">
                 Resend OTP
               </button>
             </div>

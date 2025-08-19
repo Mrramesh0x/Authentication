@@ -14,7 +14,7 @@ export default function ForgotPassword() {
     setLoading(true); // start spinner
 
     try {
-      const res = await fetch(`https://authentication-backend-5s9c.onrender.com//api/forget-password`, {
+      const res = await fetch(`https://authentication-backend-5s9c.onrender.com/api/forget-password`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
