@@ -1,19 +1,42 @@
 "use client";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 
 const VerificationPage = () => {
   const [loading, setLoading] = useState(false);
+  const [checkingAuth, setCheckingAuth] = useState(true); // ✅ page protection
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [code, setCode] = useState("");
 
   const router = useRouter();
 
+  // ✅ Protect route on mount
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const res = await axios.get(
+          "https://authentication-backend-5s9c.onrender.com/api/check-auth",
+          { withCredentials: true } // send cookie
+        );
+
+        if (!res.data.user) {
+          router.push("/login");
+        } else {
+          setCheckingAuth(false); // allow access
+        }
+      } catch (err) {
+        router.push("/login");
+      }
+    };
+
+    checkAuth();
+  }, [router]);
+
   const handleotp = async (e) => {
-    e.preventDefault(); // prevent page reload on submit
+    e.preventDefault();
     setLoading(true);
     setError("");
     setMessage("");
@@ -21,30 +44,31 @@ const VerificationPage = () => {
     try {
       const response = await axios.post(
         `https://authentication-backend-5s9c.onrender.com/api/sendverifycode`,
-        { code }
+        { code },
+        { withCredentials: true }
       );
-
 
       setMessage(response.data.message);
 
-      // ✅ Correct check: use response.status
       if (response.status === 200) {
         setTimeout(() => {
           router.push("/login");
         }, 3000);
       }
     } catch (err) {
-      // console.log("API Error:", err.response?.data);
       setError(err.response?.data?.message || "Something went wrong");
     } finally {
       setLoading(false);
     }
   };
 
+  const handleResend = async () => {
+    toast.error("Otp is limited");
+  };
 
-const handleResend = async ()=>{
-  toast.error("Otp is limited")
-}
+  // ✅ While checking authentication, show a loader
+  if (checkingAuth) return <p>Checking authentication...</p>;
+
   return (
     <div className="signup-wrapper">
       <div className="signup-container">
@@ -66,7 +90,11 @@ const handleResend = async ()=>{
                 required
                 onChange={(e) => setCode(e.target.value)}
               />
-              <button type="button" onClick={handleResend} className="resend-btn">
+              <button
+                type="button"
+                onClick={handleResend}
+                className="resend-btn"
+              >
                 Resend OTP
               </button>
             </div>

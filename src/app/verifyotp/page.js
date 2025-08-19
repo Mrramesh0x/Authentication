@@ -12,7 +12,7 @@ export default function VerifyOtp() {
 
   useEffect(() => {
     const savedEmail = localStorage.getItem("resetEmail");
-    if (!savedEmail) router.push("/forgotpassword");
+    if (!savedEmail) router.push("/forgetpassword");
     setEmail(savedEmail || "");
   }, [router]);
 

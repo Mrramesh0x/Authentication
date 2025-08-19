@@ -16,7 +16,7 @@ export default function ChangePassword() {
   useEffect(() => {
     const savedEmail = localStorage.getItem("resetEmail");
     const savedOtp = localStorage.getItem("resetOtp");
-    if (!savedEmail || !savedOtp) router.push("/forgotpassword");
+    if (!savedEmail || !savedOtp) router.push("/forgetpassword");
     setEmail(savedEmail || "");
     setOtp(savedOtp || "");
   }, [router]);
