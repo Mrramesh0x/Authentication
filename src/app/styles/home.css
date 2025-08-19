@@ -1,0 +1,100 @@
+
+.landing-container {
+
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #6c63ff 100%);
+margin-top: -47px;
+}
+
+.landing-content {
+  background: white;
+  padding: 50px 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+  max-width: 680px;
+  width: 100%;
+  text-align: center;
+}
+
+.landing-title {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.landing-description {
+  font-size: 18px;
+  color: #555;
+  margin-bottom: 40px;
+}
+
+.landing-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.btn-primary, .btn-secondary {
+  padding: 14px 28px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+  border: none;
+  transition: background 0.3s ease, color 0.3s ease;
+  min-width: 120px;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #6c63ff, #574bff);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #574bff, #6c63ff);
+}
+
+.btn-secondary {
+  background: #eee;
+  color: #555;
+}
+
+.btn-secondary:hover {
+  background: #ddd;
+}
+
+
+@media (max-width: 480px) {
+  .landing-container{
+    margin-top: -100px;
+    height: 900px;
+
+  }
+  .landing-content {
+    padding: 40px 30px;
+  }
+  .landing-title {
+    font-size: 18px;
+  }
+  .landing-description {
+    font-size: 16px;
+    margin-bottom: 30px;
+    width: 290px;
+    margin-left: -10px;
+  }
+  .btn-primary, .btn-secondary {
+    font-size: 14px;
+    width: 10px;
+    margin-left: 82px;
+    /* min-width: 100px; */
+  }
+  .landing-buttons {
+    flex-direction: column;
+    gap: 15px;
+  }
+}

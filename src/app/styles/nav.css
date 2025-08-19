@@ -1,0 +1,137 @@
+.navbar {
+  background: linear-gradient(90deg, #7569d1, #8b80e6);
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  overflow: hidden;
+  transition: height 0.3s ease;
+  min-height: 56px; /* base navbar height */
+}
+
+/* Container holds logo, hamburger, and desktop nav */
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 2;
+}
+
+/* Logo on left */
+.logo {
+  font-size: 18px;
+  font-weight: 700;
+  color: white;
+  text-decoration: none;
+  letter-spacing: 1px;
+  font-family: Arial, Helvetica, sans-serif;
+  transition: transform 0.3s ease;
+}
+
+.logo:hover {
+  transform: scale(1.55);
+}
+
+/* Desktop nav buttons (right side) */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.btn-outline {
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  border: 2px solid white;
+  background: transparent;
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.btn-outline:hover {
+  background: white;
+  color: #ff0055;
+}
+
+.btn-filled {
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  background: white;
+  color: #ff0055;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.btn-filled:hover {
+  background: #ffe4ec;
+}
+
+/* Hamburger button - hidden on desktop */
+.hamburger-btn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 1rem;
+  z-index: 10;
+}
+
+/* Mobile dropdown menu inside navbar */
+.mobile-dropdown {
+  background: linear-gradient(90deg, #7569d1, #8b80e6);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 8px;
+  border-radius: 0 0 8px 8px;
+  overflow: hidden;
+  z-index: 1;
+  margin-top: 20px;
+}
+
+/* Links inside mobile dropdown */
+.mobile-link {
+  border: none;
+  background:none;
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 0.5rem 0;
+
+  transition: color 0.3s ease;
+ 
+}
+
+.mobile-link:last-child {
+  border-bottom: none;
+}
+
+.mobile-link:hover {
+  color: #ffb6d5;
+}
+
+
+
+/* Responsive styles */
+@media (max-width: 768px) {
+
+  /* Show hamburger on mobile */
+  .hamburger-btn {
+    display: flex;
+ 
+  }
+
+  /* Hide desktop nav on mobile */
+  .nav-right {
+    display: none;
+  }
+}
