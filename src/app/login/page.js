@@ -63,7 +63,7 @@ window.location.href = "/";
       setMessage("");
       setError("");
     } catch (err) {
-      console.error("Logout error", err);
+      // console.error("Logout error", err);
     }
   };
 

@@ -39,7 +39,7 @@ export const AuthProvider = ({ children }) => {
       );
       setUser(null); // clear user state
     } catch (err) {
-      console.error("Logout error:", err);
+      // console.error("Logout error:", err);
     }
   };
 
