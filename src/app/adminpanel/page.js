@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 
 export default function AdminPage() {
   const [activeUsers, setActiveUsers] = useState(0);
+  const [emails, setEmails] = useState([]); // ✅ store emails
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
@@ -13,13 +14,13 @@ export default function AdminPage() {
       try {
         const res = await axios.get(
           "https://authentication-backend-5s9c.onrender.com/api/admin/active-users",
-          { withCredentials: true } // send cookies (JWT)
+          { withCredentials: true } // ✅ cookie-based
         );
+
         setActiveUsers(res.data.activeUsers);
+        setEmails(res.data.emails || []); // ✅ update emails
       } catch (err) {
         console.error("Admin error:", err.response?.data || err.message);
-
-        // if not logged in or not admin → kick out
         router.push("/login");
       } finally {
         setLoading(false);
@@ -30,19 +31,26 @@ export default function AdminPage() {
   }, [router]);
 
   if (loading) {
-    return (
-      <div className="page-loader">
-        <div className="loader"></div>
-      </div>
-    );
+    return <p>Loading admin data...</p>;
   }
 
   return (
     <div style={{ padding: "20px" }}>
-      <h1>Admin Dashboard</h1>
+      <h1>👑 Admin Dashboard</h1>
       <p>
         Currently Active Users: <strong>{activeUsers}</strong>
       </p>
+
+      <h2>📧 Active User Emails</h2>
+      {emails.length > 0 ? (
+        <ul>
+          {emails.map((email, idx) => (
+            <li key={idx}>{email}</li>
+          ))}
+        </ul>
+      ) : (
+        <p>No active users right now.</p>
+      )}
     </div>
   );
 }

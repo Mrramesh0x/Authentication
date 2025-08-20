@@ -2,37 +2,26 @@
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const VerificationPage = () => {
   const [loading, setLoading] = useState(false);
-  const [checkingAuth, setCheckingAuth] = useState(true); // ✅ page protection
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [code, setCode] = useState("");
+  const [email, setEmail] = useState("");
 
   const router = useRouter();
 
-  // ✅ Protect route on mount
+  // 🔹 Protect route: if no signup email, redirect to signup
   useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const res = await axios.get(
-          "https://authentication-backend-5s9c.onrender.com/api/check-auth",
-          { withCredentials: true } // send cookie
-        );
-
-        if (!res.data.user) {
-          router.push("/login");
-        } else {
-          setCheckingAuth(false); // allow access
-        }
-      } catch (err) {
-        router.push("/login");
-      }
-    };
-
-    checkAuth();
+    const savedEmail = localStorage.getItem("signupEmail");
+    if (!savedEmail) {
+      router.push("/signup");
+    } else {
+      setEmail(savedEmail);
+    }
   }, [router]);
 
   const handleotp = async (e) => {
@@ -44,15 +33,17 @@ const VerificationPage = () => {
     try {
       const response = await axios.post(
         `https://authentication-backend-5s9c.onrender.com/api/sendverifycode`,
-        { code },
-        { withCredentials: true }
+        { code, email } // ✅ send email with code
       );
 
       setMessage(response.data.message);
 
       if (response.status === 200) {
+        // clear email from localStorage after success
+        localStorage.removeItem("signupEmail");
+
         setTimeout(() => {
-          router.push("/login");
+          router.push("/login"); // ✅ redirect after success
         }, 3000);
       }
     } catch (err) {
@@ -65,9 +56,6 @@ const VerificationPage = () => {
   const handleResend = async () => {
     toast.error("Otp is limited");
   };
-
-  // ✅ While checking authentication, show a loader
-  if (checkingAuth) return <p>Checking authentication...</p>;
 
   return (
     <div className="signup-wrapper">
@@ -111,6 +99,7 @@ const VerificationPage = () => {
             )}
           </button>
         </form>
+        <ToastContainer position="top-center" autoClose={3000} theme="colored" />
       </div>
     </div>
   );

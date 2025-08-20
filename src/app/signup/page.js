@@ -11,39 +11,42 @@ const SignupPage = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
+const handleSubmit = async (event) => {
+  event.preventDefault(); // prevent default submit
+  const form = event.target;
 
-  const handleSubmit = async (event) => {
-    event.preventDefault(); // prevent default submit
-    const form = event.target;
+  if (!form.checkValidity()) {
+    form.reportValidity();
+    return;
+  }
 
-    if (!form.checkValidity()) {
-      form.reportValidity();
-      return;
+  setLoading(true);
+  setError(""); // clear old error
+
+  try {
+    const response = await axios.post(
+      `https://authentication-backend-5s9c.onrender.com/api/signup`,
+      { name, email, password }
+    );
+
+    setMessage(response.data.message);
+
+    if (response.status === 200) {
+      // ✅ Save signup email for verification page
+      localStorage.setItem("signupEmail", email);
+
+      setTimeout(() => {
+        router.push("/verification");
+      }, 3000);
     }
+  } catch (err) {
+    setError(err.response?.data?.message || "Something went wrong");
+  } finally {
+    setLoading(false);
+  }
+};
 
-    setLoading(true);
-    setError(""); // clear old error
-
-    try {
-      const response = await axios.post(
-        `https://authentication-backend-5s9c.onrender.com/api/signup`,
-        { name, email, password }
-      );
-
-      setMessage(response.data.message)
-      // Only redirect if status is 200
-      if (response.status === 200) {
-       setTimeout(() => {
-         router.push("/verification");
-       }, 3000);
-      }
-    } catch (err) {
-      // console.log("API Error:", err.response?.data);
-      setError(err.response?.data?.message || "Something went wrong");
-    } finally {
-      setLoading(false);
-    }
-  };
+  
 
   return (
     <div className="signup-wrapper">
