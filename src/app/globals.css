@@ -14,6 +14,7 @@ html, body {
 }
 body{
     font-family: 'Montserrat', sans-serif;
+    
 }
 html::-webkit-scrollbar,
 body::-webkit-scrollbar {
@@ -60,3 +61,4 @@ h2{
 .btn-outline{
 cursor: pointer;
 }
+

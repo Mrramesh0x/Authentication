@@ -1,14 +1,21 @@
 "use client";
 import React from "react";
 import { useRouter } from "next/navigation";
-import { useAuth } from "./usecontext/AuthContext.js"; // ✅ import context
+import { useAuth } from "./usecontext/AuthContext.js";
 
 const LandingPage = () => {
   const router = useRouter();
-  const { user, loading, logout } = useAuth(); // ✅ use global context
+  const { user, loading, logout } = useAuth();
 
-  // Prevent render while auth state is being checked
-  if (loading) return null;
+  // Loading / checking auth state
+  if (loading)
+    return (
+      <div className="landing-container">
+        <div className="landing-content">
+          <h1 className="landing-title">Checking if you are logged in...</h1>
+        </div>
+      </div>
+    );
 
   return (
     <div className="landing-container">

@@ -1,13 +1,12 @@
 
 .landing-container {
-
-  height: 100vh;
+height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 20px;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #6c63ff 100%);
-margin-top: -47px;
+
 }
 
 .landing-content {
@@ -98,3 +97,22 @@ margin-top: -47px;
     gap: 15px;
   }
 }
+
+/* Landing Page Title */
+.landing-title {
+  font-size: 26px;          /* Large, bold heading */
+  font-weight: 700;         /* Bold text */
+  margin-bottom: 20px;      /* Space below title */
+  color: #333;              /* Dark color for readability */
+  line-height: 1.2;         /* Good spacing between lines */
+  text-align: center;      /* Centered text */
+}
+
+/* Responsive for smaller screens */
+@media (max-width: 480px) {
+  .landing-title {
+    font-size: 24px;       /* Smaller font for mobile */
+    margin-bottom: 15px;   /* Reduce spacing */
+  }
+}
+
